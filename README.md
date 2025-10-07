@@ -1,6 +1,3 @@
-Perfecto 🔧
-A continuación te dejo el README.md ya listo para copiar y pegar directamente en tu proyecto.
-Incluye únicamente las secciones esenciales para instalación, configuración y uso, con formato Markdown profesional.
 
 # 🚀 GitHub Next.js Optimizer MCP Server
 
@@ -189,4 +186,5 @@ MIT © 2025 — Desarrollado por Gian Baeza
 
 ⭐ Si este proyecto te ha sido útil, considera darle una estrella en GitHub
 ```````
+
 
