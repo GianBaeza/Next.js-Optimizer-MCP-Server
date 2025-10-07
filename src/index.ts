@@ -476,6 +476,15 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params
 
+    // Log de uso
+    console.log(
+        `🔧 [${new Date().toISOString()}] Herramienta utilizada: ${name}`,
+    )
+    console.log(
+        `📝 [${new Date().toISOString()}] Argumentos:`,
+        JSON.stringify(args, null, 2),
+    )
+
     try {
         let result: any
 
@@ -544,6 +553,10 @@ async function main() {
     const transport = new StdioServerTransport()
     await server.connect(transport)
     console.error('🚀 GitHub Next.js Optimizer MCP Server iniciado')
+    console.error('📡 Esperando conexiones de Claude Desktop...')
+    console.error(
+        '🔍 Para verificar que funciona, usa el MCP en Claude Desktop',
+    )
 }
 
 main().catch((error) => {
