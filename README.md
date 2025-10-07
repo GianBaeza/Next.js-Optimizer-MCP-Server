@@ -1,197 +1,203 @@
-# 🚀 GitHub Next.js Optimizer MCP Server# 1️⃣ Clonar el proyecto
+# 🚀 Next.js Optimizer MCP Server
 
-git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
+Un servidor MCP (Model Context Protocol) para analizar y optimizar proyectos de Next.js y React directamente desde GitHub.
 
-Servidor **MCP** que analiza repositorios de **GitHub** y proporciona recomendaciones de **optimización para proyectos Next.js y React**.cd Next.js-Optimizer-MCP-Server
+## 📋 Descripción
 
+Este servidor MCP permite a Claude analizar repositorios de Next.js/React en GitHub, identificar problemas de rendimiento, detectar anti-patrones y proporcionar recomendaciones específicas para mejorar tu código.
 
+## ✨ Características
 
----# 2️⃣ Instalar dependencias
+- 🔍 **Análisis completo de repositorios** Next.js/React
+- 📁 **Análisis de archivos individuales** con recomendaciones detalladas
+- 📊 **Detección de problemas de rendimiento**
+- 🎯 **Identificación de anti-patrones**
+- 🔐 **Soporte para repositorios privados** mediante GitHub Token
+- 📝 **Listado de archivos React/Next.js** en el proyecto
 
-npm install
+## 🛠️ Instalación
 
-## 📦 Instalación
+### Prerrequisitos
 
-# 3️⃣ Compilar TypeScript a JavaScript
+- Node.js 16 o superior
+- npm o yarn
+- Cuenta de GitHub (y token para repos privados)
 
-### 1️⃣ Clonar el repositorionpm run build
+### Pasos de instalación
 
-
-
-```bash# 4️⃣ Verificar que funciona
-
-git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.gitnode build/index.js
-
-cd Next.js-Optimizer-MCP-Server# Deberías ver: "🚀 GitHub Next.js Optimizer MCP Server iniciado"
-
-```
-
-# 5️⃣ Crear token de GitHub
-
-### 2️⃣ Instalar dependencias# Ve a: https://github.com/settings/tokens
-
-# Crea un token con permisos: repo, public_repo
-
+1. **Clona el repositorio**
 ```bash
-
-npm install# 6️⃣ Editar configuración de Claude Desktop
-
-```# Ubicación del archivo:
-
-# Windows: %APPDATA%\Claude\claude_desktop_config.json
-
-### 3️⃣ Compilar el proyecto# macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
-
-
-
-```bash# 7️⃣ Agregar esta configuración:
-
-npm run build{
-
-```  "mcpServers": {
-
-    "github-nextjs-optimizer": {
-
----      "command": "node",
-
-      "args": ["RUTA_COMPLETA/build/index.js"],
-
-## 🔑 Configurar el Token de GitHub      "env": {
-
-        "GITHUB_TOKEN": "tu_token_github"
-
-### 1. Crear un token personal      }
-
-    }
-
-1. Ir a **GitHub** → **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)**    }
-
-   🔗 [https://github.com/settings/tokens](https://github.com/settings/tokens)}
-
-
-
-2. Hacer clic en **"Generate new token (classic)"**# 8️⃣ Reiniciar Claude Desktop completamente
-
-
-
-3. Configurar el token con:# 9️⃣ Probar en Claude Desktop:
-
-   - **Nombre:** `MCP Next.js Optimizer`# "¿Qué herramientas MCP tengo disponibles?"
-
-   - **Expiración:** 90 días (recomendado)
-   - **Scopes (permisos):**
-     - ✅ `repo`
-     - ✅ `public_repo`
-     - ✅ `read:org` (opcional)
-
-4. Copiar el token generado (`ghp_...` o `github_pat_...`)
-
----
-
-## ⚙️ Configuración en Claude Desktop
-
-### 📍 Rutas por sistema operativo
-
-| Sistema | Ruta |
-|---------|------|
-| 🪟 **Windows** | `%APPDATA%\Claude\claude_desktop_config.json` |
-| 🍎 **macOS** | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| 🐧 **Linux** | `~/.config/Claude/claude_desktop_config.json` |
-
-### 🧾 Contenido del archivo
-
-Agrega esta sección dentro del campo `"mcpServers"`:
-
-```json
-{
-  "mcpServers": {
-    "github-nextjs-optimizer": {
-      "command": "node",
-      "args": [
-        "RUTA_COMPLETA_AL_PROYECTO/build/index.js"
-      ],
-      "env": {
-        "GITHUB_TOKEN": "TU_TOKEN_DE_GITHUB_AQUÍ"
-      }
-    }
-  }
-}
+git clone https://github.com/tu-usuario/nextjs-optimizer-mcp-server.git
+cd nextjs-optimizer-mcp-server
 ```
 
-### Ejemplo (Windows)
-
-```json
-{
-  "mcpServers": {
-    "github-nextjs-optimizer": {
-      "command": "node",
-      "args": [
-        "C:\\Users\\TuUsuario\\Desktop\\Next.js-Optimizer-MCP-Server\\build\\index.js"
-      ],
-      "env": {
-        "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      }
-    }
-  }
-}
-```
-
-⚠️ **Importante:**
-- Usa doble barra `\\` en Windows
-- Reinicia Claude Desktop después de guardar
-
----
-
-## 🧠 Verificar Instalación
-
-```bash
-node build/index.js
-```
-
-Luego, en **Claude Desktop**, escribí:
-
-```
-¿Qué herramientas MCP tengo disponibles?
-```
-
----
-
-## 🧰 Uso del MCP
-
-| Comando | Ejemplo |
-|---------|---------|
-| `analizar_repositorio` | *Analiza vercel/next.js* |
-| `listar_archivos_react` | *Lista archivos React en miusuario/mi-proyecto* |
-| `analizar_archivo` | *Analiza src/app/page.tsx en miusuario/mi-proyecto* |
-
----
-
-## 🧩 Solución de Problemas
-
-### ❌ "No tengo herramientas MCP disponibles"
-
-- Verificá que `claude_desktop_config.json` esté en la ruta correcta
-- Comprobá que `build/index.js` exista
-- En Windows, usa barras dobles `\\`
-- Reiniciá Claude Desktop completamente
-
-### ❌ "Repository not found"
-
-- Verificá que el token tenga permisos `repo`
-- Probá: `curl -H "Authorization: token TU_TOKEN" https://api.github.com/user`
-
-### ❌ "El servidor no inicia"
-
+2. **Instala las dependencias**
 ```bash
 npm install
+```
+
+3. **Compila el proyecto**
+```bash
 npm run build
-node build/index.js
 ```
 
-Verificá que estés usando **Node >= 18**
+## ⚙️ Configuración
+
+### Configuración en Claude Desktop
+
+1. **Localiza el archivo de configuración de Claude Desktop:**
+
+   - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+   - **Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+2. **Edita el archivo y añade la configuración del servidor MCP:**
+
+```json
+{
+  "mcpServers": {
+    "github-nextjs-optimizer": {
+      "command": "node",
+      "args": [
+        "/ruta/absoluta/a/nextjs-optimizer-mcp-server/build/index.js"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "tu_github_personal_access_token_aqui"
+      }
+    }
+  }
+}
+```
+
+3. **Reemplaza los valores:**
+   - `/ruta/absoluta/a/nextjs-optimizer-mcp-server/build/index.js`: Ruta completa al archivo compilado
+   - `tu_github_personal_access_token_aqui`: Tu token de GitHub (opcional si solo trabajas con repos públicos)
+
+### Obtener un GitHub Personal Access Token
+
+1. Ve a GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click en "Generate new token" → "Generate new token (classic)"
+3. Dale un nombre descriptivo (ej: "Next.js Optimizer MCP")
+4. Selecciona los siguientes scopes:
+   - `repo` (acceso completo a repositorios privados)
+   - `read:user` (leer información del perfil)
+5. Click en "Generate token"
+6. **¡Importante!** Copia el token inmediatamente (no podrás verlo de nuevo)
+
+## 🚀 Uso
+
+Una vez configurado, reinicia Claude Desktop. El servidor estará disponible automáticamente.
+
+### Comandos disponibles
+
+#### 1. Configurar GitHub Token (si no lo hiciste en el archivo de config)
+
+```
+Configura mi GitHub token: ghp_tu_token_aqui
+```
+
+#### 2. Listar archivos React/Next.js
+
+```
+Lista los archivos React en el repositorio owner/nombre-repo
+```
+
+#### 3. Analizar repositorio completo
+
+```
+Analiza el repositorio owner/nombre-repo
+```
+
+#### 4. Analizar archivo específico
+
+```
+Analiza el archivo src/components/Header.tsx del repositorio owner/nombre-repo
+```
+
+### Ejemplos prácticos
+
+**Ejemplo 1: Análisis rápido**
+```
+Analiza el repositorio vercel/next.js rama canary
+```
+
+**Ejemplo 2: Análisis de componente**
+```
+Analiza el archivo app/page.tsx del repositorio mi-usuario/mi-proyecto
+```
+
+**Ejemplo 3: Explorar estructura**
+```
+Lista todos los componentes React en el directorio src/components del repo mi-usuario/mi-app
+```
+
+## 📊 Qué detecta el analizador
+
+- ✅ Componentes Client vs Server en Next.js 13+
+- ✅ Uso inadecuado de `useEffect`
+- ✅ Props drilling excesivo
+- ✅ Componentes sin memoización donde es necesario
+- ✅ Imports innecesarios
+- ✅ Falta de lazy loading
+- ✅ Problemas de hidratación
+- ✅ Anti-patrones de rendimiento
+- ✅ Oportunidades de optimización
+
+## 🔧 Desarrollo
+
+### Scripts disponibles
+
+```bash
+# Compilar el proyecto
+npm run build
+
+# Modo desarrollo con watch
+npm run watch
+
+# Limpiar archivos compilados
+npm run clean
+```
+
+## 🐛 Solución de problemas
+
+### El servidor no aparece en Claude
+
+1. Verifica que la ruta en `claude_desktop_config.json` sea absoluta y correcta
+2. Asegúrate de haber ejecutado `npm run build`
+3. Reinicia Claude Desktop completamente
+4. Revisa los logs de Claude Desktop
+
+### Errores de autenticación con GitHub
+
+1. Verifica que tu token tenga los permisos correctos
+2. Asegúrate de que el token no haya expirado
+3. Para repos privados, el token debe tener scope `repo`
+
+### No encuentra archivos en el repositorio
+
+1. Verifica que el nombre del repositorio y owner sean correctos
+2. Asegúrate de que la rama existe (por defecto busca en `main`)
+3. Confirma que tienes permisos para acceder al repositorio
+
+## 📝 Licencia
+
+MIT
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📧 Contacto
+
+Para preguntas o sugerencias, abre un issue en GitHub.
 
 ---
 
-## 🧾 Licencia
+**Nota:** Este es un servidor MCP diseñado para trabajar con Claude Desktop. Asegúrate de tener la última versión de Claude Desktop instalada.
 
-**MIT** © 2025 — Desarrollado por **Gian Baeza**
