@@ -1,0 +1,54 @@
+{
+    "name": "github-nextjs-optimizer-mcp",
+    "version": "1.0.0",
+    "description": "MCP Server para analizar y optimizar repositorios Next.js/React en GitHub - Creado por Gian Baeza",
+    "type": "module",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node build/index.js",
+        "dev": "tsx src/index.ts",
+        "watch": "tsc --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "nextjs",
+        "react",
+        "github",
+        "optimizer",
+        "performance",
+        "code-analysis",
+        "static-analysis",
+        "best-practices",
+        "react-optimization",
+        "nextjs-optimization"
+    ],
+    "author": {
+        "name": "Gian Baeza",
+        "email": "tu-email@ejemplo.com",
+        "url": "https://github.com/tu-usuario"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tu-usuario/github-nextjs-optimizer-mcp.git"
+    },
+    "bugs": {
+        "url": "https://github.com/tu-usuario/github-nextjs-optimizer-mcp/issues"
+    },
+    "homepage": "https://github.com/tu-usuario/github-nextjs-optimizer-mcp#readme",
+    "license": "MIT",
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.0.4",
+        "@octokit/rest": "^21.0.2"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.2",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}
