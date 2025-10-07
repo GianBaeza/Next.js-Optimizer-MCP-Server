@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  github-nextjs-optimizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: github-nextjs-optimizer-mcp:latest
+    container_name: mcp-nextjs-optimizer
+    environment:
+      # Token de GitHub - Configurar en archivo .env o pasar como variable
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      # Configuraciones opcionales
+      - NODE_ENV=production
+    # Volúmenes para persistencia de logs (opcional)
+    volumes:
+      - ./logs:/app/logs
+    # Restart policy
+    restart: unless-stopped
+    # Recursos (opcional - ajustar según necesidad)
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 256M
+    # Network mode para comunicación con Claude Desktop
+    # Nota: MCP usa stdio, pero se puede configurar para otros usos
+    stdin_open: true
+    tty: true
