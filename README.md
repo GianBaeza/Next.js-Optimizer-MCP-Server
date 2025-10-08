@@ -4,6 +4,33 @@ Servidor **MCP** que analiza repositorios de **GitHub** y proporciona recomendac
 
 ---
 
+## ⚡ Inicio Rápido (5 minutos)
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
+cd Next.js-Optimizer-MCP-Server
+
+# 2. Configurar el token de GitHub en .env
+Copy-Item .env.example .env
+# Edita .env y agrega tu token de GitHub
+
+# 3. Construir la imagen Docker
+docker build -t nextjs-optimizer-mcp:latest .
+
+# 4. Obtener la ruta completa del .env (Windows)
+(Get-Item .env).FullName
+
+# 5. Configurar Claude Desktop
+# Edita: %APPDATA%\Claude\claude_desktop_config.json
+# Agrega la configuración del MCP (ver sección de configuración)
+
+# 6. Reiniciar Claude Desktop
+# ¡Listo! Prueba con: "¿Qué herramientas MCP tengo disponibles?"
+```
+
+---
+
 ## 📦 Instalación
 
 ### Opción A: � Instalación con Docker (Recomendado)
@@ -30,31 +57,43 @@ Crea un token con permisos:
 #### 3️⃣ Configurar variables de entorno
 
 ```bash
-# Copiar archivo de ejemplo
-cp .env.example .env
+# Windows (PowerShell)
+Copy-Item .env.example .env
 
-# Editar .env y agregar tu token
-# GITHUB_TOKEN=tu_token_github_aqui
+# Linux/macOS
+cp .env.example .env
 ```
 
-#### 4️⃣ Construir y ejecutar con Docker
+Editar el archivo `.env` y agregar tu token de GitHub:
+
+```env
+GITHUB_TOKEN=tu_token_github_aqui
+```
+
+**⚠️ IMPORTANTE:** El token debe ser solo la cadena alfanumérica, sin emojis, comillas ni espacios.
+
+Ejemplo correcto:
+
+```env
+GITHUB_TOKEN=github_pat_11A4AD4RI0G2RkBY5TTj0P_xxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+#### 4️⃣ Construir la imagen Docker
 
 ```bash
-# Construir la imagen
-docker build -t github-nextjs-optimizer-mcp .
-
-# O usar docker-compose (recomendado)
-docker-compose up -d
+docker build -t nextjs-optimizer-mcp:latest .
 ```
 
 #### 5️⃣ Verificar que funciona
 
 ```bash
-docker logs mcp-nextjs-optimizer
+# Probar el contenedor
+echo "test" | docker run --rm -i --env-file .env nextjs-optimizer-mcp:latest
+
 # Deberías ver: "🚀 GitHub Next.js Optimizer MCP Server iniciado"
 ```
 
-#### 6️⃣ Configurar Claude Desktop con Docker
+#### 6️⃣ Configurar Claude Desktop
 
 Editar el archivo de configuración de Claude Desktop:
 
@@ -62,7 +101,20 @@ Editar el archivo de configuración de Claude Desktop:
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Linux:** `~/.config/Claude/claude_desktop_config.json`
 
-Agregar esta configuración:
+**Abrir el archivo rápidamente:**
+
+```bash
+# Windows (PowerShell)
+notepad "$env:APPDATA\Claude\claude_desktop_config.json"
+
+# macOS
+open ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+# Linux
+nano ~/.config/Claude/claude_desktop_config.json
+```
+
+**Agregar esta configuración:**
 
 ```json
 {
@@ -73,14 +125,48 @@ Agregar esta configuración:
                 "run",
                 "--rm",
                 "-i",
-                "-e",
-                "GITHUB_TOKEN=tu_token_github",
-                "github-nextjs-optimizer-mcp:latest"
+                "--env-file",
+                "RUTA_COMPLETA_AL_ARCHIVO_.env",
+                "nextjs-optimizer-mcp:latest"
             ]
         }
     }
 }
 ```
+
+**Ejemplo para Windows:**
+
+```json
+{
+    "mcpServers": {
+        "github-nextjs-optimizer": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",
+                "--env-file",
+                "C:\\Users\\TuUsuario\\Desktop\\Next.js-Optimizer-MCP-Server\\.env",
+                "nextjs-optimizer-mcp:latest"
+            ]
+        }
+    }
+}
+```
+
+**⚠️ IMPORTANTE para Windows:**
+
+-   Usa doble barra invertida `\\` en las rutas
+-   Para obtener la ruta completa del `.env`, ejecuta:
+    ```powershell
+    (Get-Item .env).FullName
+    ```
+
+#### 7️⃣ Reiniciar Claude Desktop
+
+1. Cierra **completamente** Claude Desktop (verifica en el Administrador de Tareas)
+2. Abre Claude Desktop nuevamente
+3. Prueba escribiendo: _"¿Qué herramientas MCP tengo disponibles?"_
 
 ---
 
@@ -152,41 +238,52 @@ Editar el archivo de configuración según tu sistema operativo.
 
 ## 🐳 Comandos Docker Útiles
 
-### Gestión del contenedor
+### Construcción de la imagen
 
 ```bash
 # Construir la imagen
-docker build -t github-nextjs-optimizer-mcp .
+docker build -t nextjs-optimizer-mcp:latest .
 
-# Ejecutar con docker-compose (recomendado)
-docker-compose up -d
-
-# Ver logs
-docker-compose logs -f
-
-# Detener el contenedor
-docker-compose down
-
-# Reconstruir y reiniciar
-docker-compose up -d --build
-
-# Ejecutar manualmente (sin docker-compose)
-docker run -it --rm \
-  -e GITHUB_TOKEN=tu_token_github \
-  github-nextjs-optimizer-mcp:latest
+# Verificar que la imagen se creó
+docker images nextjs-optimizer-mcp
 ```
 
-### Limpieza
+### Pruebas del contenedor
 
 ```bash
-# Eliminar contenedor
-docker-compose down
+# Probar el contenedor manualmente
+echo "test" | docker run --rm -i --env-file .env nextjs-optimizer-mcp:latest
 
-# Eliminar imagen
-docker rmi github-nextjs-optimizer-mcp:latest
+# Ver información de la imagen
+docker inspect nextjs-optimizer-mcp:latest
+```
 
-# Limpiar todo (contenedores, imágenes, volúmenes)
-docker system prune -a --volumes
+### Gestión y limpieza
+
+```bash
+# Ver todos los contenedores (incluso detenidos)
+docker ps -a
+
+# Ver logs de un contenedor específico
+docker logs [CONTAINER_ID]
+
+# Eliminar contenedores detenidos
+docker container prune
+
+# Eliminar la imagen
+docker rmi nextjs-optimizer-mcp:latest
+
+# Limpiar todo (contenedores, imágenes, volúmenes no usados)
+docker system prune -a
+```
+
+### Reconstruir después de cambios
+
+```bash
+# Si haces cambios en el código fuente
+docker build -t nextjs-optimizer-mcp:latest .
+
+# Luego reinicia Claude Desktop
 ```
 
 ---
