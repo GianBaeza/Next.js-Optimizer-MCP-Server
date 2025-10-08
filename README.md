@@ -285,15 +285,55 @@ Luego, en **Claude Desktop**, escribí:
 ### ❌ "El servidor no inicia"
 
 ```bash
-npm install
+# Compilar el proyecto
 npm run build
-node build/index.js
+
+# Modo desarrollo con watch
+npm run watch
+
+# Limpiar archivos compilados
+npm run clean
 ```
 
-Verificá que estés usando **Node >= 18**
+## 🐛 Solución de problemas
+
+### El servidor no aparece en Claude
+
+1. Verifica que la ruta en `claude_desktop_config.json` sea absoluta y correcta
+2. Asegúrate de haber ejecutado `npm run build`
+3. Reinicia Claude Desktop completamente
+4. Revisa los logs de Claude Desktop
+
+### Errores de autenticación con GitHub
+
+1. Verifica que tu token tenga los permisos correctos
+2. Asegúrate de que el token no haya expirado
+3. Para repos privados, el token debe tener scope `repo`
+
+### No encuentra archivos en el repositorio
+
+1. Verifica que el nombre del repositorio y owner sean correctos
+2. Asegúrate de que la rama existe (por defecto busca en `main`)
+3. Confirma que tienes permisos para acceder al repositorio
+
+## 📝 Licencia
+
+MIT
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📧 Contacto
+
+Para preguntas o sugerencias, abre un issue en GitHub.
 
 ---
 
-## 🧾 Licencia
-
-**MIT** © 2025 — Desarrollado por **Gian Baeza**
+**Nota:** Este es un servidor MCP diseñado para trabajar con Claude Desktop. Asegúrate de tener la última versión de Claude Desktop instalada.
