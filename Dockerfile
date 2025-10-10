@@ -2,7 +2,7 @@
 # Creado por Gian Baeza
 
 # Etapa 1: Build
-FROM node:20-alpine AS builder
+FROM node:22.20.0-alpine AS builder
 
 # Instalar dependencias del sistema
 RUN apk add --no-cache git
@@ -24,12 +24,12 @@ COPY src ./src
 RUN npm run build
 
 # Etapa 2: Production
-FROM node:20-alpine
+FROM node:22.20.0-alpine
 
 # Metadatos
 LABEL maintainer="Gian Baeza"
 LABEL description="MCP Server para analizar y optimizar repositorios Next.js/React en GitHub"
-LABEL version="1.0.0"
+LABEL version="2.1.0"
 
 # Establecer directorio de trabajo
 WORKDIR /app
@@ -38,7 +38,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar solo dependencias de producción
-RUN npm ci --only=production && \
+RUN npm ci --omit=dev && \
     npm cache clean --force
 
 # Copiar el código compilado desde la etapa de build

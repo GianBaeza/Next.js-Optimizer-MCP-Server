@@ -23,20 +23,39 @@ Un servidor MCP (Model Context Protocol) avanzado para análisis de arquitectura
 
 ## 🔧 Instalación
 
+### Requisitos Previos
+
+-   **Docker**: v20.10 o superior
+-   **Docker Compose**: v2.0 o superior (opcional, pero recomendado)
+-   **Git**: Para clonar el repositorio
+-   **Token de GitHub**: Con permisos `repo` y `read:user`
+
+> 💡 **Nota**: Este proyecto está diseñado para ejecutarse exclusivamente con Docker. No requiere Node.js instalado localmente.
+
+### Paso 1: Clonar el Repositorio
+
 ```bash
-# Clonar el repositorio
-git clone https://github.com/GianBaeza/github-nextjs-optimizer-mcp.git
-cd github-nextjs-optimizer-mcp
-
-# Instalar dependencias
-npm install
-
-# Compilar TypeScript
-npm run build
-
-# O usar la nueva versión mejorada
-npm run build:new
+git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
+cd Next.js-Optimizer-MCP-Server
 ```
+
+### Paso 2: Construir la Imagen Docker 🐳
+
+```bash
+# Opción A: Usar Docker Compose (RECOMENDADO)
+docker-compose build
+
+# Opción B: Construcción manual
+docker build -t nextjs-optimizer-mcp:latest .
+```
+
+**Ventajas de Docker:**
+
+-   ✅ No requiere instalar Node.js v22.20.0 localmente
+-   ✅ Ambiente aislado y consistente
+-   ✅ Imagen Alpine optimizada (~150MB)
+-   ✅ Configuración lista para producción
+-   ✅ Fácil actualización y despliegue
 
 ## ⚙️ Configuración Rápida
 
@@ -49,7 +68,7 @@ npm run build:new
     - ✅ `read:user` (lectura de perfil de usuario)
 4. Copia el token generado (comienza con `ghp_`)
 
-### 2️⃣ Configurar Claude Desktop
+### 2️⃣ Configurar Claude Desktop con Docker
 
 Edita tu archivo de configuración de Claude Desktop:
 
@@ -59,23 +78,33 @@ Edita tu archivo de configuración de Claude Desktop:
 -   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 -   **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
-**📝 Configuración mínima:**
+**📝 Configuración para Docker:**
 
 ```json
 {
     "mcpServers": {
         "github-nextjs-optimizer": {
-            "command": "node",
+            "command": "docker",
             "args": [
-                "C:\\Users\\PC\\Desktop\\MCP\\github-nextjs-optimizer-mcp\\build\\index.js"
-            ],
-            "env": {
-                "GITHUB_TOKEN": "ghp_tu_token_aqui"
-            }
+                "run",
+                "--rm",
+                "-i",
+                "-e",
+                "GITHUB_TOKEN=ghp_tu_token_aqui",
+                "nextjs-optimizer-mcp:latest"
+            ]
         }
     }
 }
 ```
+
+**Parámetros Docker explicados:**
+
+-   `run`: Ejecuta un nuevo contenedor
+-   `--rm`: Elimina el contenedor al terminar
+-   `-i`: Modo interactivo (requerido por MCP)
+-   `-e GITHUB_TOKEN=...`: Pasa tu token de GitHub
+-   `nextjs-optimizer-mcp:latest`: Nombre de la imagen
 
 > **💡 Nota**: El servidor detecta automáticamente tu usuario desde el token. ¡No necesitas configurar nada más!
 
@@ -101,7 +130,45 @@ LOG_FILE_ENABLED=false
 LOG_FILE_PATH=./logs/mcp-server.log
 ```
 
-### 4️⃣ Verificar Instalación
+### 4️⃣ Configuración con Docker (Opcional)
+
+Si prefieres usar Docker, edita el archivo `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+
+services:
+    nextjs-optimizer:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: nextjs-optimizer-mcp:latest
+        container_name: mcp-nextjs-optimizer
+        environment:
+            - GITHUB_TOKEN=ghp_your_token_here
+            - NODE_ENV=production
+        volumes:
+            - ./logs:/app/logs
+        restart: unless-stopped
+```
+
+**Comandos útiles de Docker:**
+
+```bash
+# Construir y ejecutar
+docker-compose up -d
+
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Detener el servidor
+docker-compose down
+
+# Reconstruir después de cambios
+docker-compose up -d --build
+```
+
+### 5️⃣ Verificar Instalación
 
 1. Reinicia Claude Desktop
 2. En el chat, verifica que aparezca el servidor conectado
@@ -459,14 +526,10 @@ npm run clean        # Limpiar archivos build
 4. Push a la rama (`git push origin feature/amazing-feature`)
 5. Abre un Pull Request
 
-
 ## 📄 Licencia
 
 MIT License - ver [LICENSE](LICENSE) para más detalles.
 
-
 ⭐ **Si este proyecto te ayuda, ¡dale una estrella en GitHub!**
 
 🚀 **¡Lleva tu código al siguiente nivel con análisis de arquitectura inteligente!**
-
-
