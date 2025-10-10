@@ -464,16 +464,9 @@ npm run clean        # Limpiar archivos build
 
 MIT License - ver [LICENSE](LICENSE) para más detalles.
 
-## 👨‍💻 Autor
-
-Creado por **Gian Baeza**
-
--   GitHub: [@GianBaeza](https://github.com/GianBaeza)
--   LinkedIn: [Gian Baeza](https://linkedin.com/in/gianbaeza)
-
----
 
 ⭐ **Si este proyecto te ayuda, ¡dale una estrella en GitHub!**
 
 🚀 **¡Lleva tu código al siguiente nivel con análisis de arquitectura inteligente!**
+
 
