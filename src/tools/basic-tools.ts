@@ -43,11 +43,11 @@ export async function configurarGitHub(
             limit: rateLimitInfo.limit,
         })
 
-        return `✅ GitHub configurado exitosamente
-📊 Rate Limit: ${rateLimitInfo.remaining}/${
+        return ` GitHub configurado exitosamente
+ Rate Limit: ${rateLimitInfo.remaining}/${
             rateLimitInfo.limit
         } requests remaining
-⏰ Reset: ${new Date(rateLimitInfo.resetTime * 1000).toLocaleString()}
+ Reset: ${new Date(rateLimitInfo.resetTime * 1000).toLocaleString()}
 
 Ahora puedes usar las demás herramientas para analizar repositorios.`
     } catch (error) {
@@ -262,21 +262,21 @@ function generateFileRecommendations(analysis: any): string[] {
     // Recomendaciones basadas en score
     if (architectureScore < 50) {
         recommendations.push(
-            '🏗️ CRÍTICO: Refactoriza la arquitectura - considera aplicar Clean Architecture',
+            'CRÍTICO: Refactoriza la arquitectura - considera aplicar Clean Architecture',
         )
     } else if (architectureScore < 70) {
         recommendations.push(
-            '⚠️ Mejora la separación de responsabilidades y aplica principios SOLID',
+            ' Mejora la separación de responsabilidades y aplica principios SOLID',
         )
     }
 
     if (cleanCodeScore < 50) {
         recommendations.push(
-            '🧹 CRÍTICO: Refactoriza para mejorar legibilidad - nombres descriptivos, funciones pequeñas',
+            ' CRÍTICO: Refactoriza para mejorar legibilidad - nombres descriptivos, funciones pequeñas',
         )
     } else if (cleanCodeScore < 70) {
         recommendations.push(
-            '📖 Mejora la calidad del código - elimina números mágicos, reduce complejidad ciclomática',
+            'Mejora la calidad del código - elimina números mágicos, reduce complejidad ciclomática',
         )
     }
 
@@ -284,7 +284,7 @@ function generateFileRecommendations(analysis: any): string[] {
     const criticalIssues = issues.filter((i: any) => i.severity === 'critical')
     if (criticalIssues.length > 0) {
         recommendations.push(
-            `🚨 Resuelve ${criticalIssues.length} issue(s) crítico(s) de inmediato`,
+            `Resuelve ${criticalIssues.length} issue(s) crítico(s) de inmediato`,
         )
     }
 
@@ -293,7 +293,7 @@ function generateFileRecommendations(analysis: any): string[] {
     )
     if (solidViolations.length > 2) {
         recommendations.push(
-            '🔧 Aplica principios SOLID - especialmente SRP e DIP',
+            'Aplica principios SOLID - especialmente SRP e DIP',
         )
     }
 
@@ -302,13 +302,13 @@ function generateFileRecommendations(analysis: any): string[] {
     )
     if (reactIssues.length > 3) {
         recommendations.push(
-            '⚛️ Optimiza componentes React - usa useMemo, useCallback y divide componentes grandes',
+            'Optimiza componentes React - usa useMemo, useCallback y divide componentes grandes',
         )
     }
 
     if (recommendations.length === 0) {
         recommendations.push(
-            '✅ ¡Excelente! Este archivo sigue buenas prácticas de arquitectura y clean code',
+            ' ¡Excelente! Este archivo sigue buenas prácticas de arquitectura y clean code',
         )
     }
 

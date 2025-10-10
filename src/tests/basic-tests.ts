@@ -80,7 +80,7 @@ export function testValidation() {
         'Should reject invalid token format',
     )
 
-    console.log('✅ Validation tests completed')
+    console.log(' Validation tests completed')
 }
 
 // Test para patrones de análisis
@@ -124,7 +124,7 @@ export function testPatterns() {
         'Should detect magic numbers',
     )
 
-    console.log('✅ Pattern analysis tests completed')
+    console.log(' Pattern analysis tests completed')
 }
 
 // Test para configuración
@@ -144,7 +144,7 @@ export function testConfiguration() {
         delete process.env.GITHUB_TOKEN
     }
 
-    console.log('✅ Configuration tests completed')
+    console.log(' Configuration tests completed')
 }
 
 // Ejecutar todos los tests
@@ -156,9 +156,9 @@ export function runAllTests() {
         testPatterns()
         testConfiguration()
 
-        console.log('\n✅ All tests passed!')
+        console.log('\n All tests passed!')
     } catch (error) {
-        console.error('\n❌ Test failed:', error)
+        console.error('\n Test failed:', error)
         process.exit(1)
     }
 }

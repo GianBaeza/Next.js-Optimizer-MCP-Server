@@ -9,9 +9,9 @@ Write-Host ""
 Write-Host "📋 Paso 1/4: Verificando Docker..." -ForegroundColor Yellow
 try {
     $dockerVersion = docker --version
-    Write-Host "✅ Docker encontrado: $dockerVersion" -ForegroundColor Green
+    Write-Host " Docker encontrado: $dockerVersion" -ForegroundColor Green
 } catch {
-    Write-Host "❌ Docker no está instalado o no está en el PATH" -ForegroundColor Red
+    Write-Host " Docker no está instalado o no está en el PATH" -ForegroundColor Red
     Write-Host "   Instala Docker Desktop desde: https://www.docker.com/products/docker-desktop" -ForegroundColor Yellow
     exit 1
 }
@@ -24,17 +24,17 @@ if (Test-Path .env) {
     if ($envContent) {
         $token = $envContent.ToString().Replace("GITHUB_TOKEN=", "").Trim()
         if ($token -match "^(ghp_|github_pat_)") {
-            Write-Host "✅ Token de GitHub configurado correctamente" -ForegroundColor Green
+            Write-Host " Token de GitHub configurado correctamente" -ForegroundColor Green
         } else {
             Write-Host "⚠️  El token no parece tener el formato correcto" -ForegroundColor Yellow
             Write-Host "   Debería comenzar con 'ghp_' o 'github_pat_'" -ForegroundColor Yellow
         }
     } else {
-        Write-Host "❌ No se encontró GITHUB_TOKEN en .env" -ForegroundColor Red
+        Write-Host " No se encontró GITHUB_TOKEN en .env" -ForegroundColor Red
         exit 1
     }
 } else {
-    Write-Host "❌ Archivo .env no encontrado" -ForegroundColor Red
+    Write-Host " Archivo .env no encontrado" -ForegroundColor Red
     exit 1
 }
 
@@ -44,9 +44,9 @@ Write-Host "📋 Paso 3/4: Construyendo imagen Docker..." -ForegroundColor Yello
 Write-Host "   (Esto puede tomar unos minutos la primera vez)" -ForegroundColor Gray
 docker build -t nextjs-optimizer-mcp:latest . 2>&1 | Out-Null
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "✅ Imagen Docker construida exitosamente" -ForegroundColor Green
+    Write-Host " Imagen Docker construida exitosamente" -ForegroundColor Green
 } else {
-    Write-Host "❌ Error al construir la imagen Docker" -ForegroundColor Red
+    Write-Host " Error al construir la imagen Docker" -ForegroundColor Red
     exit 1
 }
 
@@ -55,7 +55,7 @@ Write-Host ""
 Write-Host "📋 Paso 4/4: Probando el contenedor..." -ForegroundColor Yellow
 $testOutput = echo "test" | docker run --rm -i --env-file .env nextjs-optimizer-mcp:latest 2>&1
 if ($testOutput -match "MCP Server iniciado") {
-    Write-Host "✅ Contenedor funciona correctamente" -ForegroundColor Green
+    Write-Host " Contenedor funciona correctamente" -ForegroundColor Green
 } else {
     Write-Host "⚠️  El contenedor se ejecutó pero no se pudo verificar la salida" -ForegroundColor Yellow
 }
@@ -63,7 +63,7 @@ if ($testOutput -match "MCP Server iniciado") {
 # Mostrar configuración para Claude Desktop
 Write-Host ""
 Write-Host "=" * 60 -ForegroundColor Cyan
-Write-Host "✅ ¡Instalación completada!" -ForegroundColor Green
+Write-Host " ¡Instalación completada!" -ForegroundColor Green
 Write-Host "=" * 60 -ForegroundColor Cyan
 Write-Host ""
 Write-Host "📝 SIGUIENTE PASO:" -ForegroundColor Yellow
@@ -114,7 +114,7 @@ Write-Host "¿Deseas abrir el archivo de configuración de Claude Desktop ahora?
 $respuesta = Read-Host
 if ($respuesta -eq "S" -or $respuesta -eq "s") {
     notepad "$env:APPDATA\Claude\claude_desktop_config.json"
-    Write-Host "✅ Archivo abierto en Notepad" -ForegroundColor Green
+    Write-Host " Archivo abierto en Notepad" -ForegroundColor Green
 }
 
 Write-Host ""

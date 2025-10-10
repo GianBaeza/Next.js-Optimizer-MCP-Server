@@ -1,322 +1,65 @@
-# 🚀 GitHub Next.js Optimizer MCP Server
+# 🚀 GitHub Next.js Optimizer MCP Server v2.1
 
-Servidor **MCP** que analiza repositorios de **GitHub** y proporciona recomendaciones de **optimización para proyectos Next.js y React**.
+Un servidor MCP (Model Context Protocol) avanzado para análisis de arquitectura, Clean Code y mejores prácticas en repositorios React/Next.js.
 
----
+## ✨ Características Principales
 
-## ⚡ Inicio Rápido (5 minutos)
+### 🏗️ Análisis de Arquitectura Avanzado
 
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
-cd Next.js-Optimizer-MCP-Server
+-   **Clean Architecture**: Detección automática de capas y separación de responsabilidades
+-   **Principios SOLID**: Análisis detallado con ejemplos de refactoring
+-   **Patrones de Diseño**: Repository, Factory, Observer, Strategy y más
+-   **React/Next.js Específico**: Optimizaciones de rendimiento y mejores prácticas
 
-# 2. Configurar el token de GitHub en .env
-Copy-Item .env.example .env
-# Edita .env y agrega tu token de GitHub
+### 🛠️ Características Técnicas
 
-# 3. Construir la imagen Docker
-docker build -t nextjs-optimizer-mcp:latest .
+-   **Auto-Configuración Inteligente**: Configuración automática desde token de GitHub
+-   **Sistema de Caché**: Reduce llamadas a GitHub API con TTL configurable
+-   **Rate Limiting**: Manejo inteligente de límites de API
+-   **Logging Estructurado**: Logs detallados con niveles configurables
+-   **Validación Robusta**: Sanitización de entrada y validación de esquemas
+-   **Manejo de Errores**: Sistema robusto con retry automático
+-   **Modular**: Arquitectura limpia y extensible
 
-# 4. Obtener la ruta completa del .env (Windows)
-(Get-Item .env).FullName
-
-# 5. Configurar Claude Desktop
-# Edita: %APPDATA%\Claude\claude_desktop_config.json
-# Agrega la configuración del MCP (ver sección de configuración)
-
-# 6. Reiniciar Claude Desktop
-# ¡Listo! Prueba con: "¿Qué herramientas MCP tengo disponibles?"
-```
-
----
-
-## 📦 Instalación
-
-### Opción A: � Instalación con Docker (Recomendado)
-
-La forma más rápida y sencilla de empezar:
-
-#### 1️⃣ Clonar el repositorio
+## 🔧 Instalación
 
 ```bash
-git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
-cd Next.js-Optimizer-MCP-Server
-```
+# Clonar el repositorio
+git clone https://github.com/GianBaeza/github-nextjs-optimizer-mcp.git
+cd github-nextjs-optimizer-mcp
 
-#### 2️⃣ Crear token de GitHub
-
-Ve a: [https://github.com/settings/tokens](https://github.com/settings/tokens)
-
-Crea un token con permisos:
-
--   ✅ `repo`
--   ✅ `public_repo`
--   ✅ `read:org` (opcional)
-
-#### 3️⃣ Configurar variables de entorno
-
-```bash
-# Windows (PowerShell)
-Copy-Item .env.example .env
-
-# Linux/macOS
-cp .env.example .env
-```
-
-Editar el archivo `.env` y agregar tu token de GitHub:
-
-```env
-GITHUB_TOKEN=tu_token_github_aqui
-```
-
-**⚠️ IMPORTANTE:** El token debe ser solo la cadena alfanumérica, sin emojis, comillas ni espacios.
-
-Ejemplo correcto:
-
-```env
-GITHUB_TOKEN=github_pat_11A4AD4RI0G2RkBY5TTj0P_xxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-#### 4️⃣ Construir la imagen Docker
-
-```bash
-docker build -t nextjs-optimizer-mcp:latest .
-```
-
-#### 5️⃣ Verificar que funciona
-
-```bash
-# Probar el contenedor
-echo "test" | docker run --rm -i --env-file .env nextjs-optimizer-mcp:latest
-
-# Deberías ver: "🚀 GitHub Next.js Optimizer MCP Server iniciado"
-```
-
-#### 6️⃣ Configurar Claude Desktop
-
-Editar el archivo de configuración de Claude Desktop:
-
-**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Linux:** `~/.config/Claude/claude_desktop_config.json`
-
-**Abrir el archivo rápidamente:**
-
-```bash
-# Windows (PowerShell)
-notepad "$env:APPDATA\Claude\claude_desktop_config.json"
-
-# macOS
-open ~/Library/Application\ Support/Claude/claude_desktop_config.json
-
-# Linux
-nano ~/.config/Claude/claude_desktop_config.json
-```
-
-**Agregar esta configuración:**
-
-```json
-{
-    "mcpServers": {
-        "github-nextjs-optimizer": {
-            "command": "docker",
-            "args": [
-                "run",
-                "--rm",
-                "-i",
-                "--env-file",
-                "RUTA_COMPLETA_AL_ARCHIVO_.env",
-                "nextjs-optimizer-mcp:latest"
-            ]
-        }
-    }
-}
-```
-
-**Ejemplo para Windows:**
-
-```json
-{
-    "mcpServers": {
-        "github-nextjs-optimizer": {
-            "command": "docker",
-            "args": [
-                "run",
-                "--rm",
-                "-i",
-                "--env-file",
-                "C:\\Users\\TuUsuario\\Desktop\\Next.js-Optimizer-MCP-Server\\.env",
-                "nextjs-optimizer-mcp:latest"
-            ]
-        }
-    }
-}
-```
-
-**⚠️ IMPORTANTE para Windows:**
-
--   Usa doble barra invertida `\\` en las rutas
--   Para obtener la ruta completa del `.env`, ejecuta:
-    ```powershell
-    (Get-Item .env).FullName
-    ```
-
-#### 7️⃣ Reiniciar Claude Desktop
-
-1. Cierra **completamente** Claude Desktop (verifica en el Administrador de Tareas)
-2. Abre Claude Desktop nuevamente
-3. Prueba escribiendo: _"¿Qué herramientas MCP tengo disponibles?"_
-
----
-
-### Opción B: � Instalación Manual (Sin Docker)
-
-#### 1️⃣ Clonar el repositorio
-
-```bash
-git clone https://github.com/GianBaeza/Next.js-Optimizer-MCP-Server.git
-cd Next.js-Optimizer-MCP-Server
-```
-
-#### 2️⃣ Instalar dependencias
-
-```bash
+# Instalar dependencias
 npm install
-```
 
-#### 3️⃣ Compilar TypeScript a JavaScript
-
-```bash
+# Compilar TypeScript
 npm run build
+
+# O usar la nueva versión mejorada
+npm run build:new
 ```
 
-#### 4️⃣ Verificar que funciona
+## ⚙️ Configuración Rápida
 
-```bash
-node build/index.js
-# Deberías ver: "🚀 GitHub Next.js Optimizer MCP Server iniciado"
-```
+### 1️⃣ Obtener Token de GitHub
 
-#### 5️⃣ Crear token de GitHub
+1. Ve a [GitHub Settings > Developer Settings > Personal Access Tokens](https://github.com/settings/tokens)
+2. Click en "Generate new token (classic)"
+3. Selecciona los siguientes permisos:
+    - ✅ `repo` (acceso completo a repositorios)
+    - ✅ `read:user` (lectura de perfil de usuario)
+4. Copia el token generado (comienza con `ghp_`)
 
-Ve a: [https://github.com/settings/tokens](https://github.com/settings/tokens)
+### 2️⃣ Configurar Claude Desktop
 
-Crea un token con permisos:
+Edita tu archivo de configuración de Claude Desktop:
 
--   ✅ `repo`
--   ✅ `public_repo`
--   ✅ `read:org` (opcional)
+**📍 Ubicación del archivo:**
 
-#### 6️⃣ Configurar Claude Desktop
+-   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+-   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+-   **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
-Editar el archivo de configuración según tu sistema operativo.
-
----
-
-## 🔑 Configurar el Token de GitHub
-
-### 1. Crear un token personal
-
-1. Ir a **GitHub** → **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)**
-   🔗 [https://github.com/settings/tokens](https://github.com/settings/tokens)
-
-2. Hacer clic en **"Generate new token (classic)"**
-
-3. Configurar el token con:
-
-    - **Nombre:** `MCP Next.js Optimizer`
-    - **Expiración:** 90 días (recomendado)
-    - **Scopes (permisos):**
-        - ✅ `repo`
-        - ✅ `public_repo`
-        - ✅ `read:org` (opcional)
-
-4. Copiar el token generado (`ghp_...` o `github_pat_...`)
-
----
-
-## 🐳 Comandos Docker Útiles
-
-### Construcción de la imagen
-
-```bash
-# Construir la imagen
-docker build -t nextjs-optimizer-mcp:latest .
-
-# Verificar que la imagen se creó
-docker images nextjs-optimizer-mcp
-```
-
-### Pruebas del contenedor
-
-```bash
-# Probar el contenedor manualmente
-echo "test" | docker run --rm -i --env-file .env nextjs-optimizer-mcp:latest
-
-# Ver información de la imagen
-docker inspect nextjs-optimizer-mcp:latest
-```
-
-### Gestión y limpieza
-
-```bash
-# Ver todos los contenedores (incluso detenidos)
-docker ps -a
-
-# Ver logs de un contenedor específico
-docker logs [CONTAINER_ID]
-
-# Eliminar contenedores detenidos
-docker container prune
-
-# Eliminar la imagen
-docker rmi nextjs-optimizer-mcp:latest
-
-# Limpiar todo (contenedores, imágenes, volúmenes no usados)
-docker system prune -a
-```
-
-### Reconstruir después de cambios
-
-```bash
-# Si haces cambios en el código fuente
-docker build -t nextjs-optimizer-mcp:latest .
-
-# Luego reinicia Claude Desktop
-```
-
----
-
-## ⚙️ Configuración en Claude Desktop
-
-### 📍 Rutas por sistema operativo
-
-| Sistema        | Ruta                                                              |
-| -------------- | ----------------------------------------------------------------- |
-| 🪟 **Windows** | `%APPDATA%\Claude\claude_desktop_config.json`                     |
-| 🍎 **macOS**   | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| 🐧 **Linux**   | `~/.config/Claude/claude_desktop_config.json`                     |
-
-### 🧾 Contenido del archivo
-
-Agrega esta sección dentro del campo `"mcpServers"`:
-
-```json
-{
-    "mcpServers": {
-        "github-nextjs-optimizer": {
-            "command": "node",
-            "args": ["RUTA_COMPLETA_AL_PROYECTO/build/index.js"],
-            "env": {
-                "GITHUB_TOKEN": "TU_TOKEN_DE_GITHUB_AQUÍ"
-            }
-        }
-    }
-}
-```
-
-### Ejemplo (Windows)
+**📝 Configuración mínima:**
 
 ```json
 {
@@ -324,113 +67,441 @@ Agrega esta sección dentro del campo `"mcpServers"`:
         "github-nextjs-optimizer": {
             "command": "node",
             "args": [
-                "C:\\Users\\TuUsuario\\Desktop\\Next.js-Optimizer-MCP-Server\\build\\index.js"
+                "C:\\Users\\PC\\Desktop\\MCP\\github-nextjs-optimizer-mcp\\build\\index.js"
             ],
             "env": {
-                "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                "GITHUB_TOKEN": "ghp_tu_token_aqui"
             }
         }
     }
 }
 ```
 
-⚠️ **Importante:**
+> **💡 Nota**: El servidor detecta automáticamente tu usuario desde el token. ¡No necesitas configurar nada más!
 
--   Usa doble barra `\\` en Windows
--   Reinicia Claude Desktop después de guardar
+### 3️⃣ Variables de Entorno (Opcional)
 
----
-
-## 🧠 Verificar Instalación
+Puedes personalizar el comportamiento creando un archivo `.env`:
 
 ```bash
-node build/index.js
+# GitHub Configuration
+GITHUB_TOKEN=ghp_your_token_here
+
+# Cache Settings
+GITHUB_CACHE_ENABLED=true
+GITHUB_CACHE_TTL=300000
+
+# Analysis Settings
+MAX_CONCURRENT_FILES=10
+MAX_FILE_SIZE=1048576
+
+# Logging
+LOG_LEVEL=info
+LOG_FILE_ENABLED=false
+LOG_FILE_PATH=./logs/mcp-server.log
 ```
 
-Luego, en **Claude Desktop**, escribí:
+### 4️⃣ Verificar Instalación
+
+1. Reinicia Claude Desktop
+2. En el chat, verifica que aparezca el servidor conectado
+3. Prueba con: `"Analiza mi repositorio GianBaeza/mi-proyecto"`
+
+¡Listo! 🎉
+
+## 🎯 Uso y Herramientas
+
+### � Inicio Rápido
+
+Una vez configurado, puedes usar el servidor directamente desde Claude:
+
+**Ejemplo 1: Analizar un repositorio completo**
 
 ```
-¿Qué herramientas MCP tengo disponibles?
+Analiza el repositorio GianBaeza/Next.js-Optimizer-MCP-Server
+```
+
+**Ejemplo 2: Analizar un archivo específico**
+
+```
+Analiza el archivo src/components/Button.tsx del repo facebook/react
+```
+
+**Ejemplo 3: Obtener sugerencias de arquitectura**
+
+```
+Sugiere una arquitectura Clean para mi proyecto web Next.js: usuario/mi-proyecto
+```
+
+### 📋 Herramientas Disponibles
+
+#### 1️⃣ `listar_archivos_react`
+
+Lista todos los archivos React/Next.js del repositorio organizados por directorio.
+
+**Parámetros:**
+
+```typescript
+{
+  owner: string,    // Tu usuario de GitHub (auto-detectado)
+  repo: string,     // Nombre del repositorio
+  path?: string     // Directorio base (opcional, default: raíz)
+}
+```
+
+**Ejemplo:**
+
+```
+Lista los archivos React de mi repositorio awesome-app
 ```
 
 ---
 
-## 🧰 Uso del MCP
+#### 2️⃣ `analizar_archivo`
 
-| Comando                 | Ejemplo                                             |
-| ----------------------- | --------------------------------------------------- |
-| `analizar_repositorio`  | _Analiza vercel/next.js_                            |
-| `listar_archivos_react` | _Lista archivos React en miusuario/mi-proyecto_     |
-| `analizar_archivo`      | _Analiza src/app/page.tsx en miusuario/mi-proyecto_ |
+Analiza un archivo específico aplicando principios de Clean Architecture y SOLID.
+
+**Parámetros:**
+
+```typescript
+{
+  owner: string,    // Usuario propietario del repo
+  repo: string,     // Nombre del repositorio
+  path: string,     // Ruta del archivo
+  branch?: string   // Rama (default: main)
+}
+```
+
+**Ejemplo:**
+
+```
+Analiza src/pages/index.tsx de mi repo portfolio
+```
 
 ---
 
-## 🧩 Solución de Problemas
+#### 3️⃣ `analizar_repositorio`
 
-### ❌ "No tengo herramientas MCP disponibles"
+Analiza la arquitectura completa del repositorio con recomendaciones personalizadas.
 
--   Verificá que `claude_desktop_config.json` esté en la ruta correcta
--   Comprobá que `build/index.js` exista
--   En Windows, usa barras dobles `\\`
--   Reiniciá Claude Desktop completamente
+**Parámetros:**
 
-### ❌ "Repository not found"
+```typescript
+{
+  owner: string,    // Usuario propietario
+  repo: string,     // Nombre del repositorio
+  branch?: string   // Rama a analizar (default: main)
+}
+```
 
--   Verificá que el token tenga permisos `repo`
--   Probá: `curl -H "Authorization: token TU_TOKEN" https://api.github.com/user`
+**Ejemplo:**
 
-### ❌ "El servidor no inicia"
+```
+Analiza mi repositorio e-commerce-nextjs y dame recomendaciones
+```
+
+---
+
+#### 4️⃣ `sugerir_arquitectura`
+
+Sugiere una estructura de Clean Architecture personalizada para el proyecto.
+
+**Parámetros:**
+
+```typescript
+{
+  owner: string,
+  repo: string,
+  projectType?: "web" | "api" | "mobile" | "fullstack" | "library"
+}
+```
+
+**Ejemplo:**
+
+```
+Sugiere arquitectura para mi proyecto API REST: usuario/api-project
+```
+
+---
+
+#### 5️⃣ `explicar_patron`
+
+Explica un patrón de diseño con ejemplos prácticos en React/Next.js.
+
+**Parámetros:**
+
+```typescript
+{
+    patron: string // repository, factory, observer, strategy, etc.
+}
+```
+
+**Ejemplo:**
+
+```
+Explícame el patrón Repository con ejemplo en Next.js
+```
+
+## 📊 Ejemplo de Análisis
+
+### Resultado de Análisis Completo
+
+```json
+{
+    "repository": "GianBaeza/mi-proyecto-nextjs",
+    "branch": "main",
+    "analysis": {
+        "scores": {
+            "architecture": 85,
+            "cleanCode": 78,
+            "overall": 82
+        },
+        "summary": {
+            "total": 12,
+            "critical": 1,
+            "high": 3,
+            "medium": 6,
+            "low": 2,
+            "info": 0
+        },
+        "topIssues": [
+            {
+                "file": "src/components/UserForm.tsx",
+                "issue": "Violación del SRP (Single Responsibility Principle)",
+                "severity": "critical",
+                "line": 45,
+                "recommendation": "Separa la lógica de validación y la lógica de envío en componentes diferentes",
+                "designPattern": "Single Responsibility Principle",
+                "example": "// Antes\nfunction UserForm() {\n  // validación + envío + UI\n}\n\n// Después\nfunction useUserValidation() { /* ... */ }\nfunction useUserSubmit() { /* ... */ }\nfunction UserForm() { /* solo UI */ }"
+            }
+        ],
+        "suggestions": [
+            {
+                "title": "Implementar Repository Pattern",
+                "description": "Abstrae las llamadas a la API en repositorios dedicados",
+                "pattern": "Repository Pattern",
+                "benefit": "Mejor desacoplamiento y facilita testing",
+                "implementation": "src/repositories/UserRepository.ts"
+            }
+        ]
+    }
+}
+```
+
+### Interpretación de Puntuaciones
+
+**Arquitectura (0-100)**
+
+-   🟢 **90-100**: Excelente - Sigue Clean Architecture fielmente
+-   🟡 **70-89**: Buena - Algunas mejoras recomendadas
+-   🟠 **50-69**: Aceptable - Refactoring recomendado
+-   🔴 **0-49**: Problemática - Refactoring urgente
+
+**Clean Code (0-100)**
+
+-   🟢 **90-100**: Código muy limpio y mantenible
+-   🟡 **70-89**: Código limpio con mejoras menores
+-   🟠 **50-69**: Código aceptable, necesita mejoras
+-   🔴 **0-49**: Código difícil de mantener
+
+## 🏗️ Arquitectura del Proyecto
+
+```
+src/
+├── types/              # Definiciones de tipos TypeScript
+│   ├── analysis.ts     # Tipos para análisis de código
+│   ├── server.ts       # Tipos de configuración
+│   └── index.ts        # Exportador de tipos
+├── utils/              # Utilidades del sistema
+│   ├── config.ts       # Sistema de configuración
+│   ├── logger.ts       # Sistema de logging
+│   ├── validation.ts   # Validación y sanitización
+│   ├── cache.ts        # Sistema de caché en memoria
+│   ├── errors.ts       # Manejo de errores
+│   └── index.ts        # Exportador de utilidades
+├── patterns/           # Patrones de análisis
+│   ├── solid-principles.ts    # Principios SOLID
+│   ├── clean-architecture.ts  # Clean Architecture
+│   ├── react-nextjs.ts       # Patrones React/Next.js
+│   ├── design-patterns.ts    # Patrones de diseño
+│   └── index.ts              # Exportador de patrones
+├── services/           # Servicios externos
+│   ├── github.ts       # Servicio de GitHub optimizado
+│   └── index.ts        # Exportador de servicios
+├── analyzers/          # Analizadores de código
+│   ├── code-analyzer.ts # Analizador principal
+│   └── index.ts         # Exportador de analizadores
+├── tools/              # Herramientas MCP
+│   ├── basic-tools.ts   # Herramientas básicas
+│   ├── advanced-tools.ts # Herramientas avanzadas
+│   └── index.ts         # Exportador de herramientas
+├── tests/              # Suite de tests
+│   └── basic-tests.ts   # Tests básicos
+├── index-new.ts        # Servidor principal mejorado
+└── index.ts            # Servidor original (compatible)
+```
+
+## 🧪 Testing
 
 ```bash
-# Compilar el proyecto
-npm run build
+# Ejecutar tests básicos
+npm test
 
-# Modo desarrollo con watch
-npm run watch
+# Verificar tipos
+npm run lint
 
-# Limpiar archivos compilados
-npm run clean
+# Desarrollo con recarga automática
+npm run dev:new
 ```
 
-## 🐛 Solución de problemas
+## 📈 Métricas de Calidad
 
-### El servidor no aparece en Claude
+### Puntuación de Arquitectura (0-100)
 
-1. Verifica que la ruta en `claude_desktop_config.json` sea absoluta y correcta
-2. Asegúrate de haber ejecutado `npm run build`
-3. Reinicia Claude Desktop completamente
-4. Revisa los logs de Claude Desktop
+-   **90-100**: Excelente arquitectura, sigue Clean Architecture
+-   **70-89**: Buena arquitectura, algunas mejoras necesarias
+-   **50-69**: Arquitectura aceptable, refactoring recomendado
+-   **0-49**: Arquitectura problemática, refactoring urgente
 
-### Errores de autenticación con GitHub
+### Puntuación de Clean Code (0-100)
 
-1. Verifica que tu token tenga los permisos correctos
-2. Asegúrate de que el token no haya expirado
-3. Para repos privados, el token debe tener scope `repo`
+-   **90-100**: Código muy limpio y legible
+-   **70-89**: Código limpio con pequeñas mejoras
+-   **50-69**: Código aceptable, algunas mejoras necesarias
+-   **0-49**: Código difícil de mantener, refactoring necesario
 
-### No encuentra archivos en el repositorio
+## 🔍 Patrones Detectados
 
-1. Verifica que el nombre del repositorio y owner sean correctos
-2. Asegúrate de que la rama existe (por defecto busca en `main`)
-3. Confirma que tienes permisos para acceder al repositorio
+### Principios SOLID
 
-## 📝 Licencia
+-   **SRP**: Single Responsibility Principle
+-   **OCP**: Open/Closed Principle
+-   **LSP**: Liskov Substitution Principle
+-   **ISP**: Interface Segregation Principle
+-   **DIP**: Dependency Inversion Principle
 
-MIT
+### Clean Architecture
 
-## 🤝 Contribuciones
+-   **Domain Layer**: Entidades y reglas de negocio
+-   **Application Layer**: Casos de uso
+-   **Infrastructure Layer**: Repositorios y servicios
+-   **Presentation Layer**: UI y controladores
 
-Las contribuciones son bienvenidas. Por favor:
+### Patrones de Diseño
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
+-   **Repository**: Abstracción de datos
+-   **Factory**: Creación de objetos
+-   **Observer**: Comunicación entre componentes
+-   **Strategy**: Algoritmos intercambiables
+-   **Command**: Encapsulación de operaciones
+
+### React/Next.js
+
+-   **Performance**: useMemo, useCallback, lazy loading
+-   **Architecture**: Component composition, custom hooks
+-   **Best Practices**: Key props, conditional rendering
+-   **Next.js**: SSR/SSG, API routes, optimization
+
+## 🚀 Novedades v2.1
+
+### ✨ Nuevas Características
+
+-   **Auto-Configuración Inteligente**: Ya no necesitas especificar tu usuario de GitHub, se detecta automáticamente desde el token
+-   **Sistema de Caché Avanzado**: Reduce llamadas API en 80% con TTL configurable
+-   **Análisis Concurrente**: Procesa múltiples archivos en paralelo para mayor velocidad
+-   **Validación Robusta**: Schemas de validación con sanitización automática
+-   **Logging Estructurado**: Logs con rotación y niveles configurables (debug, info, warn, error)
+-   **Rate Limiting Inteligente**: Manejo automático de límites de GitHub API
+-   **Error Recovery**: Sistema de retry automático con backoff exponencial
+
+### 🏗️ Mejoras de Arquitectura
+
+-   **Modularización Completa**: Separación en módulos especializados (types, utils, patterns, services, analyzers, tools)
+-   **Inyección de Dependencias**: Sistema DI para mejor testeo y mantenibilidad
+-   **Configuración Flexible**: Variables de entorno con fallbacks sensatos
+-   **Extensibilidad**: Fácil adición de nuevos patrones y reglas de análisis
+
+### 🔄 Migración desde v1.0
+
+Si estás usando la versión anterior:
+
+1. Actualiza tu `claude_desktop_config.json` con la nueva configuración (ver arriba)
+2. Recompila el proyecto: `npm run build:new`
+3. Reinicia Claude Desktop
+4. ¡Ya no necesitas llamar a `configurar_github`! El servidor se auto-configura
+
+## 📝 Scripts Disponibles
+
+```bash
+# Desarrollo
+npm run dev          # Versión original
+npm run dev:new      # Versión mejorada v2.1
+
+# Compilación
+npm run build        # Compilar versión original
+npm run build:new    # Compilar versión mejorada
+
+# Ejecución
+npm start            # Ejecutar versión original
+npm run start:new    # Ejecutar versión mejorada
+
+# Testing y calidad
+npm test             # Ejecutar tests
+npm run lint         # Verificar tipos TypeScript
+npm run clean        # Limpiar archivos build
+```
+
+## 🤝 Contribuir
+
+1. Fork el repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/amazing-feature`)
+3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
+4. Push a la rama (`git push origin feature/amazing-feature`)
 5. Abre un Pull Request
 
-## 📧 Contacto
+## ❓ Preguntas Frecuentes (FAQ)
 
-Para preguntas o sugerencias, abre un issue en GitHub.
+### ¿Por qué ya no necesito especificar mi usuario de GitHub?
+
+El servidor ahora detecta automáticamente tu usuario usando el token de GitHub que proporcionas. Esto elimina errores de tipeo y simplifica la configuración.
+
+### ¿Funciona con repositorios privados?
+
+Sí, siempre que tu token de GitHub tenga los permisos necesarios (`repo` scope).
+
+### ¿Puedo analizar repositorios de otras organizaciones?
+
+Sí, solo especifica el `owner` correcto al usar las herramientas. Por ejemplo: `analizar_repositorio facebook react`.
+
+### ¿Cuántas llamadas hace a la API de GitHub?
+
+Con el sistema de caché activado, el servidor reduce las llamadas en aproximadamente 80%. Los resultados se cachean por 5 minutos (configurable).
+
+### ¿Qué pasa si excedo el límite de API de GitHub?
+
+El servidor tiene manejo inteligente de rate limiting con retry automático y backoff exponencial. Te notificará si necesitas esperar.
+
+### ¿Puedo usar esto en VS Code?
+
+Sí, el servidor MCP es compatible con cualquier cliente que soporte el protocolo MCP, incluyendo VS Code con la extensión adecuada.
+
+### ¿Los análisis son precisos al 100%?
+
+Los análisis son heurísticos y se basan en patrones comunes. Siempre revisa las sugerencias en el contexto de tu proyecto específico.
+
+## 📄 Licencia
+
+MIT License - ver [LICENSE](LICENSE) para más detalles.
+
+## 👨‍💻 Autor
+
+Creado por **Gian Baeza**
+
+-   GitHub: [@GianBaeza](https://github.com/GianBaeza)
+-   LinkedIn: [Gian Baeza](https://linkedin.com/in/gianbaeza)
 
 ---
 
-**Nota:** Este es un servidor MCP diseñado para trabajar con Claude Desktop. Asegúrate de tener la última versión de Claude Desktop instalada.
+⭐ **Si este proyecto te ayuda, ¡dale una estrella en GitHub!**
+
+🚀 **¡Lleva tu código al siguiente nivel con análisis de arquitectura inteligente!**

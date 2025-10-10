@@ -15,12 +15,12 @@ export const domainLayer: AnalysisPattern[] = [
             'En Clean Architecture, las entidades del dominio deben ser auto-validantes. Esto asegura que nunca existan en un estado inválido.',
         designPattern: 'Domain Entity Pattern',
         architectureLayer: 'Domain Layer (Entities)',
-        codeExample: `// ❌ Mal
+        codeExample: `//  Mal
 class User {
   constructor(public email: string, public age: number) {}
 }
 
-// ✅ Bien
+// Bien
 class User {
   private constructor(
     public readonly email: string,
@@ -60,7 +60,7 @@ class User {
         explanation:
             'El dominio debe ser puro y no depender de frameworks, librerías o detalles de implementación.',
         architectureLayer: 'Domain Layer',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 
@@ -72,7 +72,7 @@ class UserEntity {
   }
 }
 
-// ✅ Bien
+// Bien
 class UserEntity {
   private constructor(private readonly id: string) {}
 
@@ -100,7 +100,7 @@ export const useCaseLayer: AnalysisPattern[] = [
             'Los hooks son adaptadores de la UI. La lógica de negocio debe estar en casos de uso puros que no dependan de React.',
         designPattern: 'Use Case Pattern',
         architectureLayer: 'Application Layer (Use Cases)',
-        codeExample: `// ❌ Mal - Lógica en el hook
+        codeExample: `// Mal - Lógica en el hook
 export function useUser() {
   const [user, setUser] = useState(null);
 
@@ -114,7 +114,7 @@ export function useUser() {
   return { user, login };
 }
 
-// ✅ Bien - Separación de responsabilidades
+// Bien - Separación de responsabilidades
 // useCases/loginUseCase.ts
 export class LoginUseCase {
   constructor(
@@ -168,7 +168,7 @@ export function useAuth() {
         explanation:
             'Los casos de uso no deben crear sus dependencias. Esto viola el principio de inversión de dependencias.',
         architectureLayer: 'Application Layer',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 class CreateUserUseCase {
   async execute(userData: UserData) {
     const repository = new UserRepository(); // Creando dependencia
@@ -179,7 +179,7 @@ class CreateUserUseCase {
   }
 }
 
-// ✅ Bien
+// Bien
 class CreateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
@@ -198,7 +198,7 @@ export const infrastructureLayer: AnalysisPattern[] = [
     {
         pattern: /class\s+\w+Repository\s+(?:implements|extends)/g,
         issue: 'Repositorio detectado',
-        recommendation: '✅ Implementando patrón Repository correctamente',
+        recommendation: ' Implementando patrón Repository correctamente',
         severity: 'good',
         explanation:
             'Los repositorios abstraen el acceso a datos, permitiendo cambiar la fuente sin afectar la lógica de negocio.',
@@ -214,13 +214,13 @@ export const infrastructureLayer: AnalysisPattern[] = [
         severity: 'high',
         explanation:
             'Las llamadas directas a APIs crean acoplamiento. Usa repositorios para abstraer la fuente de datos.',
-        codeExample: `// ❌ Mal - Llamada directa
+        codeExample: `//  Mal - Llamada directa
 const getUsers = async () => {
   const response = await fetch('/api/users');
   return response.json();
 };
 
-// ✅ Bien - Repositorio
+// Bien - Repositorio
 interface IUserRepository {
   getAll(): Promise<User[]>;
   getById(id: string): Promise<User>;
@@ -248,12 +248,12 @@ class UserApiRepository implements IUserRepository {
         explanation:
             'El acceso directo al storage acopla el código al navegador. Un servicio permite cambiar la implementación.',
         architectureLayer: 'Infrastructure Layer',
-        codeExample: `// ❌ Mal
+        codeExample: `//  Mal
 function saveUser(user: User) {
   localStorage.setItem('user', JSON.stringify(user));
 }
 
-// ✅ Bien
+//  Bien
 interface IStorageService {
   save<T>(key: string, data: T): void;
   load<T>(key: string): T | null;
@@ -298,7 +298,7 @@ export const presentationLayer: AnalysisPattern[] = [
         explanation:
             'Los componentes deben enfocarse en renderizado. Las llamadas a APIs deben estar en la capa de aplicación.',
         architectureLayer: 'Presentation Layer',
-        codeExample: `// ❌ Mal
+        codeExample: `//  Mal
 function UserProfile() {
   const [user, setUser] = useState(null);
 
@@ -311,7 +311,7 @@ function UserProfile() {
   return <div>{user?.name}</div>;
 }
 
-// ✅ Bien
+// Bien
 // Hook personalizado
 function useUser(id: string) {
   const [user, setUser] = useState(null);

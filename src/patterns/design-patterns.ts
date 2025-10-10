@@ -9,7 +9,7 @@ export const designPatterns: AnalysisPattern[] = [
     {
         pattern: /class\s+\w+Factory/g,
         issue: 'Patrón Factory detectado',
-        recommendation: '✅ Usando Factory Pattern para creación de objetos',
+        recommendation: 'Usando Factory Pattern para creación de objetos',
         severity: 'good',
         designPattern: 'Factory Pattern',
         explanation:
@@ -48,7 +48,7 @@ const user = UserFactory.create('admin');`,
     {
         pattern: /class\s+\w+(?:Observer|Subject|Publisher)/g,
         issue: 'Patrón Observer detectado',
-        recommendation: '✅ Usando Observer Pattern para comunicación',
+        recommendation: 'Usando Observer Pattern para comunicación',
         severity: 'good',
         designPattern: 'Observer Pattern',
         explanation:
@@ -86,7 +86,7 @@ class UserObserver implements Observer {
         pattern: /class\s+\w+Strategy/g,
         issue: 'Patrón Strategy detectado',
         recommendation:
-            '✅ Usando Strategy Pattern para algoritmos intercambiables',
+            'Usando Strategy Pattern para algoritmos intercambiables',
         severity: 'good',
         designPattern: 'Strategy Pattern',
         explanation:
@@ -125,7 +125,7 @@ class PaymentContext {
     {
         pattern: /class\s+\w+Builder/g,
         issue: 'Patrón Builder detectado',
-        recommendation: '✅ Usando Builder Pattern para construcción compleja',
+        recommendation: 'Usando Builder Pattern para construcción compleja',
         severity: 'good',
         designPattern: 'Builder Pattern',
         explanation:
@@ -184,13 +184,12 @@ const user = new UserBuilder()
         pattern:
             /class\s+\w+(?:Singleton|Instance)\s*{[^}]*private\s+static[^}]*getInstance/gs,
         issue: 'Patrón Singleton detectado',
-        recommendation:
-            '⚠️ Usa Singleton con cuidado - puede dificultar testing',
+        recommendation: 'Usa Singleton con cuidado - puede dificultar testing',
         severity: 'medium',
         designPattern: 'Singleton Pattern',
         explanation:
             'El patrón Singleton asegura una sola instancia, pero puede crear dependencias globales difíciles de testear.',
-        codeExample: `// ❌ Singleton tradicional (problemático para testing)
+        codeExample: `//Singleton tradicional (problemático para testing)
 class DatabaseConnection {
   private static instance: DatabaseConnection;
 
@@ -204,7 +203,7 @@ class DatabaseConnection {
   }
 }
 
-// ✅ Mejor alternativa con DI
+// Mejor alternativa con DI
 class DatabaseConnection {
   constructor() {}
 }
@@ -217,7 +216,7 @@ container.registerSingleton('DatabaseConnection', DatabaseConnection);`,
     {
         pattern: /class\s+\w+Command/g,
         issue: 'Patrón Command detectado',
-        recommendation: '✅ Usando Command Pattern para encapsular operaciones',
+        recommendation: ' Usando Command Pattern para encapsular operaciones',
         severity: 'good',
         designPattern: 'Command Pattern',
         explanation:
@@ -264,7 +263,7 @@ class CommandInvoker {
     {
         pattern: /class\s+\w+Adapter/g,
         issue: 'Patrón Adapter detectado',
-        recommendation: '✅ Usando Adapter Pattern para compatibilidad',
+        recommendation: 'Usando Adapter Pattern para compatibilidad',
         severity: 'good',
         designPattern: 'Adapter Pattern',
         explanation:
@@ -309,7 +308,7 @@ export const antiPatterns: AnalysisPattern[] = [
         explanation:
             'Las clases demasiado grandes violan el principio de responsabilidad única y son difíciles de mantener.',
         designPattern: 'Single Responsibility Principle',
-        codeExample: `// ❌ God Object
+        codeExample: `// God Object
 class UserManager {
   // 1000+ líneas haciendo todo:
   // - Validación
@@ -320,7 +319,7 @@ class UserManager {
   // - etc...
 }
 
-// ✅ Separación de responsabilidades
+//Separación de responsabilidades
 class UserValidator { /* validación */ }
 class UserRepository { /* persistencia */ }
 class UserNotificationService { /* notificaciones */ }
@@ -346,7 +345,7 @@ class UserService {
         severity: 'high',
         explanation:
             'Los condicionales profundamente anidados son difíciles de leer y mantener.',
-        codeExample: `// ❌ Código espagueti
+        codeExample: `// Código espagueti
 function processUser(user) {
   if (user) {
     if (user.isActive) {
@@ -359,7 +358,7 @@ function processUser(user) {
   }
 }
 
-// ✅ Early returns
+// Early returns
 function processUser(user) {
   if (!user) return;
   if (!user.isActive) return;
@@ -378,12 +377,12 @@ function processUser(user) {
         severity: 'medium',
         explanation:
             'Los valores hardcodeados son difíciles de mantener y no revelan su propósito.',
-        codeExample: `// ❌ Números mágicos
+        codeExample: `// Números mágicos
 if (user.age >= 18 && user.score > 1000) {
   setTimeout(callback, 3600000);
 }
 
-// ✅ Constantes descriptivas
+// Constantes descriptivas
 const LEGAL_AGE = 18;
 const MIN_PREMIUM_SCORE = 1000;
 const ONE_HOUR_MS = 60 * 60 * 1000;

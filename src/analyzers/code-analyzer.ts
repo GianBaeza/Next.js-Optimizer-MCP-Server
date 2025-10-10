@@ -292,12 +292,12 @@ export class CodeAnalyzer {
                 occurrences: shortVarNames.length,
                 explanation:
                     'Clean Code: El código se lee más que se escribe. Los nombres deben revelar la intención.',
-                codeExample: `// ❌ Mal
+                codeExample: `//  Mal
 const u = getUser();
 const d = new Date();
 const x = calculateTotal();
 
-// ✅ Bien
+//  Bien
 const currentUser = getUser();
 const createdAt = new Date();
 const totalAmount = calculateTotal();`,
@@ -321,7 +321,7 @@ const totalAmount = calculateTotal();`,
                     occurrences: 1,
                     explanation:
                         'Una función debe caber en una pantalla y hacer una sola cosa bien.',
-                    codeExample: `// ❌ Mal - Función larga
+                    codeExample: `//  Mal - Función larga
 function processUserData(userData) {
   // 50+ líneas de lógica compleja
   // validación
@@ -331,7 +331,7 @@ function processUserData(userData) {
   // logging
 }
 
-// ✅ Bien - Funciones específicas
+//  Bien - Funciones específicas
 function validateUserData(userData) { /* ... */ }
 function transformUserData(userData) { /* ... */ }
 function saveUserData(userData) { /* ... */ }
@@ -367,7 +367,7 @@ function processUserData(userData) {
                 occurrences: commentLines,
                 explanation:
                     'Clean Code: Los comentarios son una forma de fracaso. El código debe explicarse por sí mismo.',
-                codeExample: `// ❌ Mal - Comentarios excesivos
+                codeExample: `//  Mal - Comentarios excesivos
 // Obtener el usuario desde la base de datos
 const user = await getUserFromDatabase(id);
 // Verificar si el usuario existe
@@ -378,7 +378,7 @@ if (!user) {
 // Retornar los datos del usuario
 return user;
 
-// ✅ Bien - Código auto-explicativo
+//  Bien - Código auto-explicativo
 const user = await findUserById(id);
 if (!user) {
   throw new UserNotFoundError(id);
@@ -399,12 +399,12 @@ return user;`,
                 recommendation: 'Usa constantes con nombres descriptivos',
                 severity: 'medium',
                 occurrences: magicNumbers.length,
-                codeExample: `// ❌ Mal
+                codeExample: `//  Mal
 if (age > 18) { }
 setTimeout(callback, 3600000);
 const tax = amount * 0.21;
 
-// ✅ Bien
+//  Bien
 const LEGAL_AGE = 18;
 const ONE_HOUR_MS = 60 * 60 * 1000;
 const VAT_RATE = 0.21;

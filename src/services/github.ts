@@ -45,6 +45,8 @@ export class GitHubService {
     private readonly cache = getCache()
     private readonly errorHandler = getErrorHandler()
     private readonly config: NonNullable<ServerConfig['github']>
+    private token: string | null = null
+    private owner: string | null = null
 
     constructor(config: ServerConfig['github']) {
         this.config = config || {
@@ -57,16 +59,15 @@ export class GitHubService {
     /**
      * Configura el token de GitHub
      */
-    configure(token: string): void {
-        this.octokit = new Octokit({
-            auth: token,
-            userAgent: 'github-code-mentor-mcp/2.1.0',
-            request: {
-                timeout: 10000, // 10 segundos timeout
-            },
-        })
+    async configure(token: string): Promise<void> {
+        this.octokit = new Octokit({ auth: token })
+        this.token = token
 
-        this.logger.info('GITHUB', 'GitHub service configured successfully')
+        // 🆕 Obtener usuario automáticamente desde el token
+        const { data: user } = await this.octokit.rest.users.getAuthenticated()
+        this.owner = user.login
+
+        this.logger.info('GITHUB', `Configurado para usuario: ${this.owner}`)
     }
 
     /**

@@ -752,7 +752,7 @@ function generateRepositoryRecommendations(
 
     if (recommendations.length === 0) {
         recommendations.push(
-            '✅ ¡Excelente! El repositorio sigue buenas prácticas de arquitectura',
+            ' ¡Excelente! El repositorio sigue buenas prácticas de arquitectura',
         )
     }
 

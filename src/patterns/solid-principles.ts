@@ -16,7 +16,7 @@ export const solidPrinciples: AnalysisPattern[] = [
         explanation:
             'SRP: Una clase debe tener una sola razón para cambiar. Si hace HTTP, logging y storage, tiene 3 razones para cambiar.',
         designPattern: 'Single Responsibility Principle',
-        codeExample: `// ❌ Mal - Múltiples responsabilidades
+        codeExample: `//  Mal - Múltiples responsabilidades
 class UserService {
   async getUser(id: string) {
     console.log('Getting user...');
@@ -26,7 +26,7 @@ class UserService {
   }
 }
 
-// ✅ Bien - Responsabilidades separadas
+//  Bien - Responsabilidades separadas
 class UserRepository {
   constructor(private httpClient: IHttpClient) {}
   async getById(id: string): Promise<User> {
@@ -58,7 +58,7 @@ class Logger {
         explanation:
             'OCP: Las clases deben estar abiertas para extensión pero cerradas para modificación. Los múltiples if/else sugieren que necesitarás modificar la clase para nuevos casos.',
         designPattern: 'Strategy Pattern',
-        codeExample: `// ❌ Mal - Violar OCP
+        codeExample: `//  Mal - Violar OCP
 function calculateDiscount(customerType: string, amount: number) {
   if (customerType === 'regular') {
     return amount * 0.05;
@@ -70,7 +70,7 @@ function calculateDiscount(customerType: string, amount: number) {
   // Para agregar un nuevo tipo, hay que modificar esta función
 }
 
-// ✅ Bien - Cumplir OCP
+//  Bien - Cumplir OCP
 interface DiscountStrategy {
   calculate(amount: number): number;
 }
@@ -106,7 +106,7 @@ class DiscountCalculator {
         explanation:
             'ISP: Los clientes no deben depender de interfaces que no usan. Las interfaces grandes fuerzan a implementar métodos innecesarios.',
         designPattern: 'Interface Segregation Principle',
-        codeExample: `// ❌ Mal - Interface demasiado grande
+        codeExample: `//  Mal - Interface demasiado grande
 interface UserService {
   // User management
   createUser(data: UserData): Promise<User>;
@@ -126,7 +126,7 @@ interface UserService {
   getUserAnalytics(userId: string): Promise<Analytics>;
 }
 
-// ✅ Bien - Interfaces segregadas
+//  Bien - Interfaces segregadas
 interface IUserRepository {
   create(data: UserData): Promise<User>;
   update(id: string, data: Partial<UserData>): Promise<User>;
@@ -154,7 +154,7 @@ interface INotificationService {
         explanation:
             'DIP: Depende de abstracciones, no de concreciones. Inyecta dependencias en lugar de crearlas.',
         designPattern: 'Dependency Injection Pattern',
-        codeExample: `// ❌ Mal - Dependencia concreta
+        codeExample: `//  Mal - Dependencia concreta
 class UserController {
   private repository = new UserApiRepository(); // Dependencia concreta
 
@@ -163,7 +163,7 @@ class UserController {
   }
 }
 
-// ✅ Bien - Inyección de dependencias
+//  Bien - Inyección de dependencias
 class UserController {
   constructor(private repository: IUserRepository) {} // Dependencia abstracta
 
@@ -188,7 +188,7 @@ const controller = new UserController(repository);`,
         explanation:
             'LSP: Los objetos de una clase derivada deben poder reemplazar objetos de la clase base sin alterar el funcionamiento correcto del programa.',
         designPattern: 'Liskov Substitution Principle',
-        codeExample: `// ❌ Mal - Violar LSP
+        codeExample: `//  Mal - Violar LSP
 class Bird {
   fly(): void {
     console.log('Flying...');
@@ -201,7 +201,7 @@ class Penguin extends Bird {
   }
 }
 
-// ✅ Bien - Cumplir LSP
+//  Bien - Cumplir LSP
 abstract class Bird {
   abstract move(): void;
 }

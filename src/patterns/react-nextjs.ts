@@ -15,7 +15,7 @@ export const reactPatterns: AnalysisPattern[] = [
         explanation:
             'Componentes grandes son difíciles de mantener y testear. Aplica composición.',
         designPattern: 'Composite Pattern',
-        codeExample: `// ❌ Mal - Componente grande
+        codeExample: `// Mal - Componente grande
 function UserDashboard() {
   // 300+ líneas de código...
   return (
@@ -25,7 +25,7 @@ function UserDashboard() {
   );
 }
 
-// ✅ Bien - Componentes pequeños
+// Bien - Componentes pequeños
 function UserDashboard() {
   return (
     <div>
@@ -57,12 +57,12 @@ function UserStats() {
         explanation:
             'Múltiples estados relacionados indican necesidad de un reducer o estado consolidado.',
         designPattern: 'Facade Pattern / State Pattern',
-        codeExample: `// ❌ Mal - Estados dispersos
+        codeExample: `// Mal - Estados dispersos
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState(null);
 const [data, setData] = useState(null);
 
-// ✅ Bien - Estado consolidado
+// Bien - Estado consolidado
 const [state, dispatch] = useReducer(reducer, {
   loading: false,
   error: null,
@@ -82,10 +82,10 @@ const { data, loading, error } = useUserData(userId);`,
         severity: 'high',
         explanation:
             'Objetos inline crean nuevas referencias en cada render, causando re-renders.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 <Component config={{ theme: 'dark', size: 'lg' }} />
 
-// ✅ Bien
+// Bien
 const config = useMemo(() => ({ theme: 'dark', size: 'lg' }), []);
 <Component config={config} />`,
     },
@@ -98,12 +98,12 @@ const config = useMemo(() => ({ theme: 'dark', size: 'lg' }), []);
             'Usa useCallback para funciones en listas (Command Pattern)',
         severity: 'high',
         designPattern: 'Command Pattern',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 {items.map(item => (
   <Item onClick={() => handleClick(item.id)} />
 ))}
 
-// ✅ Bien
+// Bien
 const handleItemClick = useCallback((id: string) => {
   handleClick(id);
 }, [handleClick]);
@@ -122,7 +122,7 @@ const handleItemClick = useCallback((id: string) => {
         explanation:
             'Pasar muchas props sugiere que hay información que debería estar en un contexto compartido.',
         designPattern: 'Context Pattern',
-        codeExample: `// ❌ Mal - Props drilling
+        codeExample: `//  Mal - Props drilling
 function App() {
   const [user, setUser] = useState(null);
   return <Dashboard user={user} setUser={setUser} />;
@@ -136,7 +136,7 @@ function Sidebar({ user, setUser }) {
   return <UserMenu user={user} setUser={setUser} />;
 }
 
-// ✅ Bien - Context
+// Bien - Context
 const UserContext = createContext();
 
 function App() {
@@ -173,12 +173,12 @@ function UserMenu() {
         severity: 'medium',
         explanation:
             'React necesita la prop "key" para optimizar el renderizado de listas.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 {users.map(user => (
   <UserCard user={user} />
 ))}
 
-// ✅ Bien
+// Bien
 {users.map(user => (
   <UserCard key={user.id} user={user} />
 ))}`,
@@ -193,7 +193,7 @@ function UserMenu() {
         severity: 'medium',
         explanation:
             'Los ternarios anidados son difíciles de leer. Es mejor extraer la lógica.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 {isLoading ?
   <Spinner /> :
   hasError ?
@@ -203,7 +203,7 @@ function UserMenu() {
       <EmptyState />
 }
 
-// ✅ Bien
+//  Bien
 function ContentRenderer({ isLoading, hasError, hasData, data }) {
   if (isLoading) return <Spinner />;
   if (hasError) return <ErrorMessage />;
@@ -231,7 +231,7 @@ export const nextjsPatterns: AnalysisPattern[] = [
         severity: 'medium',
         explanation:
             'Las funciones de Next.js deben ser simples y delegar la lógica compleja a servicios.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 export async function getServerSideProps(context) {
   // 200+ líneas de lógica compleja...
   const data = await fetch('...');
@@ -241,7 +241,7 @@ export async function getServerSideProps(context) {
   return { props: { enriched } };
 }
 
-// ✅ Bien
+// Bien
 export async function getServerSideProps(context) {
   const dataService = new DataService();
   const data = await dataService.getPageData(context.params);
@@ -259,13 +259,13 @@ export async function getServerSideProps(context) {
         severity: 'high',
         explanation:
             'Las API routes deben manejar errores graciosamente y retornar códigos HTTP apropiados.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 export default async function handler(req, res) {
   const data = await someOperation();
   res.json(data);
 }
 
-// ✅ Bien
+// Bien
 export default async function handler(req, res) {
   try {
     if (req.method !== 'GET') {
@@ -289,10 +289,10 @@ export default async function handler(req, res) {
         severity: 'low',
         explanation:
             'React.lazy() proporciona mejor integración con Suspense para componentes pesados.',
-        codeExample: `// ❌ Regular
+        codeExample: `// Regular
 const HeavyComponent = dynamic(() => import('./HeavyComponent'));
 
-// ✅ Mejor para componentes grandes
+// Mejor para componentes grandes
 const HeavyComponent = lazy(() => import('./HeavyComponent'));
 
 function App() {
@@ -314,10 +314,10 @@ export const performancePatterns: AnalysisPattern[] = [
         severity: 'medium',
         explanation:
             'next/image proporciona optimización automática, lazy loading y mejores métricas de rendimiento.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 <img src="/photo.jpg" alt="Photo" />
 
-// ✅ Bien
+// Bien
 import Image from 'next/image';
 
 <Image
@@ -337,10 +337,10 @@ import Image from 'next/image';
         severity: 'medium',
         explanation:
             'next/font optimiza las fuentes eliminando solicitudes de red adicionales.',
-        codeExample: `// ❌ Mal
+        codeExample: `// Mal
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-// ✅ Bien
+// Bien
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
