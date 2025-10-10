@@ -459,35 +459,6 @@ npm run clean        # Limpiar archivos build
 4. Push a la rama (`git push origin feature/amazing-feature`)
 5. Abre un Pull Request
 
-## ❓ Preguntas Frecuentes (FAQ)
-
-### ¿Por qué ya no necesito especificar mi usuario de GitHub?
-
-El servidor ahora detecta automáticamente tu usuario usando el token de GitHub que proporcionas. Esto elimina errores de tipeo y simplifica la configuración.
-
-### ¿Funciona con repositorios privados?
-
-Sí, siempre que tu token de GitHub tenga los permisos necesarios (`repo` scope).
-
-### ¿Puedo analizar repositorios de otras organizaciones?
-
-Sí, solo especifica el `owner` correcto al usar las herramientas. Por ejemplo: `analizar_repositorio facebook react`.
-
-### ¿Cuántas llamadas hace a la API de GitHub?
-
-Con el sistema de caché activado, el servidor reduce las llamadas en aproximadamente 80%. Los resultados se cachean por 5 minutos (configurable).
-
-### ¿Qué pasa si excedo el límite de API de GitHub?
-
-El servidor tiene manejo inteligente de rate limiting con retry automático y backoff exponencial. Te notificará si necesitas esperar.
-
-### ¿Puedo usar esto en VS Code?
-
-Sí, el servidor MCP es compatible con cualquier cliente que soporte el protocolo MCP, incluyendo VS Code con la extensión adecuada.
-
-### ¿Los análisis son precisos al 100%?
-
-Los análisis son heurísticos y se basan en patrones comunes. Siempre revisa las sugerencias en el contexto de tu proyecto específico.
 
 ## 📄 Licencia
 
@@ -505,3 +476,4 @@ Creado por **Gian Baeza**
 ⭐ **Si este proyecto te ayuda, ¡dale una estrella en GitHub!**
 
 🚀 **¡Lleva tu código al siguiente nivel con análisis de arquitectura inteligente!**
+
